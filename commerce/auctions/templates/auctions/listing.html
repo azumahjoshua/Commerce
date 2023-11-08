@@ -41,11 +41,22 @@
             {% elif user != listing.created_by and not listing.active_status %}
                 <p>Bidding on this listing is closed.</p>
             {% endif %}
+            <h3>Comments</h3>
+            {% if comments %}
+             <ul>
+                {% for comment in comments %}
+                    <li>{{comment.comment_text }} by {{comment.commenter}}</li>
+                {% endfor %}
+             </ul>
+            {% else %}
+                <p>No Comments yet</p>
+            {% endif %}
             <form method="post" action="{% url 'listing' listing.id %}">
                 {% csrf_token %}
                 {{ comment_form.as_p }}
                 <button type="submit" name="add_comment">Add Comment</button>
             </form>
+            <!-- Display comments and number of comments -->
         {% else %}
             <p>Please <a href="{% url 'login' %}">log in</a> to interact with this listing.</p>
         {% endif %}

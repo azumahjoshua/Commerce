@@ -87,7 +87,9 @@ def create_listing(request):
 def listing(request,listing_id):
     user = User.objects.get(pk=request.user.id)
     listing = get_object_or_404(Listing, pk=listing_id)
-
+    bid_form = BidForm()
+    comment_form = CommentForm()
+    comments = Comment.objects.filter(listing=listing)
     if request.method == "POST":
         if user.is_authenticated:
             if 'add_watchlist' in request.POST:
@@ -134,9 +136,24 @@ def listing(request,listing_id):
         else:
              # Handle error for unauthenticated users trying to place a bid
             messages.error(request, "You must be logged in to place a bid.")
-    bid_form = BidForm()
-    comment_form = CommentForm()
-    return render(request, 'auctions/listing.html', {'listing': listing, 'user': user, 'bid_form': bid_form, 'comment_form': comment_form})
+    
+    if request.method == 'POST' and 'add_comment' in request.POST:
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.commenter = request.user
+            comment.listing = listing
+            comment.save()
+            # messages.success(request, "Comment added successfully.")
+            return redirect('listing', listing_id=listing_id)
+    # print(comments_count)
+    return render(request, 'auctions/listing.html', {
+        'listing': listing,
+        'user': user,
+        'bid_form': bid_form,
+        'comment_form': comment_form,
+        'comments': comments
+    })
 
 def watchlist(request):
     user = User.objects.get(pk=request.user.id)
