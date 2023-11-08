@@ -160,8 +160,29 @@ def watchlist(request):
     watchlist_items = user.watchlist.all()
     count_watchlist = watchlist_items.count()
     # print(watchlist_items)
-    return render(request,'auctions/watchlist.html', 
-                  {'watchlist_items': watchlist_items,
-                   'user':user,
-                   'count':count_watchlist
+    return render(request,'auctions/watchlist.html', {
+        'watchlist_items': watchlist_items,
+        'user':user,
+        'count':count_watchlist
                    })
+
+def category_list(request,selected_category):
+    categories_list = Listing.CATEGORY
+    category_names = set([category[0] for category in categories_list])
+    selected_category = selected_category
+    listings = Listing.objects.filter(category = selected_category,active_status=True)
+    print(listings)
+    return render(request,'auctions/category_list.html',{
+        'category_names':category_names,
+        'listings':listings
+        })
+
+# def category_listings(request,selected_category):
+#         category_name = selected_category
+#         listings = Listing.objects.filter(category =category_name,active_status=True)
+#         print(listings)
+#         return render(request,'auctions/category_listings.html',{
+#             'category_name': category_name, 
+#             'listings': listings
+#         })
+        
