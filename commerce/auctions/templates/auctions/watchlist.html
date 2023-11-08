@@ -1,0 +1,27 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+  <h2>Your Watchlist</h2>
+
+  {% if watchlist_items %}
+    <ul class="list-group">
+      {% for item in watchlist_items %}
+        <li class="list-group-item">
+          <div class="d-flex">
+            <div class="mr-auto">
+              <h5>{{ item.title }}</h5>
+              <p>Current Price: ${{ item.current_price }}</p>
+              <p>Category: {{ item.category }}</p>
+              <p>Created On: {{ item.created_on }}</p>
+            </div>
+            <div class="ml-auto">
+              <a href="{% url 'listing' item.id %}" class="btn btn-primary">View Listing</a>
+            </div>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Your watchlist is empty.</p>
+  {% endif %}
+  {% endblock %}
