@@ -171,7 +171,7 @@ def category_list(request,selected_category):
     category_names = set([category[0] for category in categories_list])
     selected_category = selected_category
     listings = Listing.objects.filter(category = selected_category,active_status=True)
-    print(listings)
+    # print(listings)
     return render(request,'auctions/category_list.html',{
         'category_names':category_names,
         'listings':listings
