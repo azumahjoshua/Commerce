@@ -1,29 +1,47 @@
 {% extends "auctions/layout.html" %}
 {% block body %}
-<ul>
-  {% for category in category_names %}
-    <li><a href="{% url 'category_list' category %}">{{ category }}</a></li>
-  {% endfor %}
-  {% for listing in listings %}
-<div class="card auction-item mb-4 shadow">
-        {% if listing.image_url %}
-        <div class="card-image-wrapper">
-            <img class="card-img-top listing-img" src="{{ listing.image_url }}" alt="{{ listing.title }} photo">
-        </div>
-        {% endif %}
-        <div class="card-body">
-            <h5 class="card-title">{{ listing.title }}</h5>
-            <div>
-                <strong>Price:</strong> ${{ listing.starting_bid }}
+<div class="container-fluid listing-container">
+    <div class="row">
+        <!-- Sidebar with Category Navigation -->
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <ul class="nav flex-column">
+                {% for category in category_names %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'category_list' category %}">{{ category }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </nav>
+
+        <!-- Main Content with Centered Listings -->
+        <main role="main" class="col-md-10 ml-sm-auto">
+            <div class="row justify-content-center">
+                {% for listing in listings %}
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class=" auction-item shadow pl-5 pb-5">
+                            {% if listing.image_url %}
+                                <div class="card-image-wrapper">
+                                    <img class="card-img-top listing-img" src="{{ listing.image_url }}" alt="{{ listing.title }} photo">
+                                </div>
+                            {% endif %}
+                            <div class="">
+                                <h5 class="card-title">{{ listing.title }}</h5>
+                                <div>
+                                    <strong>Price:</strong> ${{ listing.starting_bid }}
+                                </div>
+                                <div class="mb-2">
+                                    <strong>Category:</strong> {{ listing.category }}
+                                </div>
+                                <div class="auction-list-date">
+                                    {{ listing.created_on }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
-            <div class="mb-2">
-                <strong>Category:</strong> {{ listing.category }}
-            </div>
-            <div class="auction-list-date">
-                {{ listing.created_on }}
-            </div>
-        </div>
+        </main>
+    </div>
 </div>
-{% endfor %}
-</ul>
+
 {% endblock %}

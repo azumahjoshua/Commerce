@@ -4,8 +4,11 @@
     margin: 0;
 }
 .container-fluid {
-    margin: 0;
+    margin:0;
     padding: 0;
+}
+.navbar{
+    margin-bottom: 20px;
 }
 .navbar-brand {
     margin-left: 50px;
@@ -17,4 +20,36 @@
 .navbar-nav {
     font-weight: bold;
     font-size: medium;
+}
+.listing-container{
+    margin-top: 85px;
+    padding-left: 25px;
+}
+.card{
+    width: 200px;
+    height: 450px;
+    padding-top: 15px;
+    margin-top: 60px;
+}
+.listing-img {
+    /* max-width: 100%; */
+    height: 250px;
+    width: 200px;
+}
+.image-wrapper img{
+    width: 400px;
+    height: 500px;
+}
+
+.list-unstyled .comment-text {
+    font-weight: bold; /* Example styling: Make comment text bold */
+    color: #333; /* Example styling: Set text color for comment text */
+}
+
+/* Styles for commenter */
+.list-unstyled .commenter {
+    text-transform: uppercase;
+    font-size: 15px;
+    font-style: italic; /* Example styling: Make commenter name italic */
+    color: #777; /* Example styling: Set text color for commenter name */
 }
